@@ -31,7 +31,7 @@ function App() {
       }
       
       // Using CoinGecko API which includes image URLs and doesn't require API key
-      const COINGECKO_URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=12&page=${page}&sparkline=false&price_change_percentage=24h`;
+      const COINGECKO_URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=${page}&sparkline=false&price_change_percentage=24h,7d`;
       
       const response = await fetch(COINGECKO_URL);
       
@@ -46,12 +46,14 @@ function App() {
         id: coin.id,
         name: coin.name,
         symbol: coin.symbol.toUpperCase(),
-        cmc_rank: coin.market_cap_rank || ((page - 1) * 12 + index + 1),
+        cmc_rank: coin.market_cap_rank || ((page - 1) * 20 + index + 1),
         image: coin.image, // Add image URL from CoinGecko
+        circulating_supply: coin.circulating_supply,
         quote: {
           USD: {
             price: coin.current_price,
-            percent_change_24h: coin.price_change_percentage_24h,
+            percent_change_24h: coin.price_change_percentage_24h || 0,
+            percent_change_7d: coin.price_change_percentage_7d_in_currency || 0,
             market_cap: coin.market_cap,
             volume_24h: coin.total_volume
           }
@@ -65,7 +67,7 @@ function App() {
       }
       
       // Check if we have more data (CoinGecko has thousands of coins)
-      setHasMoreData(data.length === 12);
+      setHasMoreData(data.length === 20);
       setError(null);
     } catch (err) {
       setError(err.message);

@@ -573,3 +573,110 @@
     border-width: 2px;
   }
 }
+
+/* Enhanced Features for Optimized Grid */
+.favorites-toggle {
+  padding: 0.875rem 1.25rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.favorites-toggle:hover {
+  background: var(--glass-bg-hover);
+  border-color: var(--border-color-hover);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.favorites-toggle.active {
+  background: var(--text-primary);
+  color: var(--primary-bg);
+  border-color: var(--text-primary);
+}
+
+/* Market Overview */
+.market-overview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  backdrop-filter: blur(20px);
+}
+
+.overview-stat {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.overview-stat svg {
+  color: var(--text-primary);
+}
+
+/* Clear search button */
+.clear-search-btn {
+  padding: 0.75rem 1.5rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  backdrop-filter: blur(20px);
+  margin-top: 1rem;
+}
+
+.clear-search-btn:hover {
+  background: var(--text-primary);
+  color: var(--primary-bg);
+  border-color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+/* Enhanced responsive design for new features */
+@media (max-width: 768px) {
+  .market-overview {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0.875rem;
+  }
+  
+  .overview-stat {
+    font-size: 0.8rem;
+  }
+  
+  .favorites-toggle {
+    font-size: 0.85rem;
+    padding: 0.75rem 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .market-overview {
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+  
+  .overview-stat {
+    font-size: 0.75rem;
+  }
+}
