@@ -1,8 +1,6 @@
 .crypto-section {
   min-height: 100vh;
-  background: 
-    radial-gradient(circle at 30% 40%, rgba(0, 212, 255, 0.02) 0%, transparent 50%),
-    linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%);
+  background: var(--primary-bg);
   padding: 4rem 2rem;
   position: relative;
   overflow: hidden;
@@ -16,16 +14,12 @@
   right: 0;
   bottom: 0;
   background-image: 
-    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
-  background-size: 100px 100px;
-  opacity: 0.2;
+    linear-gradient(rgba(59, 130, 246, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.02) 1px, transparent 1px);
+  background-size: 80px 80px;
+  opacity: 0.3;
   z-index: 1;
 }
-
-
-
-
 
 .crypto-container {
   max-width: 1200px;
@@ -36,19 +30,18 @@
 
 .section-header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
   position: relative;
   z-index: 3;
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 15px;
-  padding: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .section-header h2 {
-  font-size: 2.5rem;
-  font-weight: 900;
-  color: #ffffff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
   margin-bottom: 1rem;
   background: linear-gradient(135deg, #ffffff, #00d4ff);
   -webkit-background-clip: text;
@@ -103,18 +96,16 @@
 }
 
 .crypto-card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 24px;
-  padding: 2rem;
-  transition: all 0.3s ease;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow-lg);
 }
 
 .crypto-card::before {
@@ -123,19 +114,22 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #00d4ff, #0099cc, #ff6b6b);
-  border-radius: 24px 24px 0 0;
+  height: 3px;
+  background: var(--gradient-primary);
+  border-radius: 20px 20px 0 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .crypto-card:hover {
-  transform: translateY(-8px);
-  border-color: rgba(0, 212, 255, 0.3);
+  transform: translateY(-4px);
+  border-color: rgba(59, 130, 246, 0.3);
   background: rgba(255, 255, 255, 0.08);
-  box-shadow: 
-    0 15px 40px rgba(0, 212, 255, 0.2),
-    0 8px 32px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  box-shadow: var(--shadow-xl);
+}
+
+.crypto-card:hover::before {
+  opacity: 1;
 }
 
 .crypto-header {
@@ -332,21 +326,19 @@
 .load-more-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.8rem;
-  background: linear-gradient(135deg, #00d4ff, #0099cc);
-  color: #ffffff;
+  gap: 0.75rem;
+  background: var(--gradient-primary);
+  color: white;
   border: none;
-  padding: 1.2rem 2.5rem;
-  border-radius: 50px;
-  font-weight: 700;
-  font-size: 1rem;
+  padding: 1rem 2rem;
+  border-radius: 16px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  box-shadow: 
-    0 8px 25px rgba(0, 212, 255, 0.3),
-    0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: -0.01em;
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
   position: relative;
   overflow: hidden;
 }

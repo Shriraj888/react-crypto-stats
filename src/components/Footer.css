@@ -1,8 +1,8 @@
 .footer {
-  background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
-  color: #ffffff;
+  background: var(--secondary-bg);
+  color: var(--text-primary);
   padding: 3rem 2rem 1rem;
-  border-top: 1px solid #333;
+  border-top: 1px solid var(--border-color);
 }
 
 .footer-container {
@@ -18,17 +18,20 @@
 }
 
 .footer-section h3 {
-  font-size: 1.5rem;
-  font-weight: 900;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, #00d4ff, #0099cc);
+  background: var(--gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  letter-spacing: -0.01em;
 }
 
 .footer-section h4 {
-  font-size: 1.1rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 1rem;

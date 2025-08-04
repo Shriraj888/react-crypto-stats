@@ -128,7 +128,7 @@ const About = ({ cryptoData = [] }) => {
         <div className="about-cta">
           <h3>Ready to Start Tracking?</h3>
           <p>Join thousands of users who trust CryptoTracker for their crypto portfolio management</p>
-          <button className="cta-button">
+          <button className="modern-button">
             <TrendingUp size={20} />
             Get Started Today
           </button>

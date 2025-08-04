@@ -142,7 +142,7 @@ const Contact = () => {
 
               <button 
                 type="submit" 
-                className="submit-button"
+                className="modern-button"
                 disabled={submitStatus === 'loading'}
               >
                 {submitStatus === 'loading' ? (
