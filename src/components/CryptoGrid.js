@@ -44,10 +44,23 @@ const CryptoCard = memo(({ crypto, isFavorite, onToggleFavorite }) => {
   const isPositive7d = priceChange7d >= 0;
 
   return (
-    <div className="crypto-card" tabIndex={0} role="button" aria-label={`${crypto.name} cryptocurrency details`}>
+    <div 
+      className="crypto-card" 
+      tabIndex={0} 
+      role="button" 
+      aria-label={`${crypto.name} cryptocurrency details`}
+      data-crypto-id={crypto.id}
+    >
+      {/* Animated Background Gradient */}
+      <div className="crypto-card-bg"></div>
+      
+      {/* Price Trend Indicator */}
+      <div className={`price-trend-indicator ${isPositive24h ? 'trending-up' : 'trending-down'}`}></div>
+      
       <div className="crypto-card-header">
         <div className="crypto-main-info">
           <div className="crypto-logo-container">
+            <div className="logo-shimmer"></div>
             <img 
               src={crypto.image} 
               alt={`${crypto.name} logo`}
@@ -61,9 +74,14 @@ const CryptoCard = memo(({ crypto, isFavorite, onToggleFavorite }) => {
             <div className="crypto-logo-fallback" style={{ display: 'none' }}>
               {crypto.symbol.charAt(0)}
             </div>
+            {/* Animated pulse ring for active cryptos */}
+            <div className="crypto-pulse-ring"></div>
           </div>
           <div className="crypto-info">
-            <h3 className="crypto-name">{crypto.name}</h3>
+            <h3 className="crypto-name">
+              {crypto.name}
+              <span className="live-indicator">●</span>
+            </h3>
             <span className="crypto-symbol">{crypto.symbol}</span>
           </div>
         </div>
@@ -73,58 +91,114 @@ const CryptoCard = memo(({ crypto, isFavorite, onToggleFavorite }) => {
             onClick={handleFavoriteClick}
             aria-label={`${isFavorite ? 'Remove from' : 'Add to'} favorites`}
           >
+            <div className="favorite-btn-bg"></div>
             {isFavorite ? <Star size={16} /> : <StarOff size={16} />}
           </button>
-          <div className="crypto-rank">#{crypto.cmc_rank}</div>
+          <div className="crypto-rank">
+            <span className="rank-hash">#</span>
+            <span className="rank-number">{crypto.cmc_rank}</span>
+          </div>
         </div>
       </div>
       
       <div className="crypto-price-section">
-        <div className="crypto-price">
-          {formatPrice(crypto.quote.USD.price)}
+        <div className="price-container">
+          <div className="crypto-price">
+            <span className="price-symbol">$</span>
+            <span className="price-value">{formatPrice(crypto.quote.USD.price).replace('$', '')}</span>
+          </div>
+          <div className="price-sparkline">
+            {/* Animated price trend line */}
+            <svg width="60" height="20" className="mini-chart">
+              <path 
+                d={`M 0 ${isPositive24h ? 15 : 5} Q 15 ${isPositive24h ? 10 : 8} 30 ${isPositive24h ? 8 : 12} T 60 ${isPositive24h ? 5 : 15}`}
+                stroke={isPositive24h ? 'rgba(255,255,255,0.6)' : 'rgba(255,255,255,0.3)'} 
+                strokeWidth="2" 
+                fill="none"
+                className="price-path"
+              />
+            </svg>
+          </div>
         </div>
         <div className={`crypto-change ${isPositive24h ? 'positive' : 'negative'}`}>
-          {isPositive24h ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
-          {formatPercentage(priceChange24h)}
+          <div className="change-icon">
+            {isPositive24h ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
+          </div>
+          <span className="change-value">{formatPercentage(priceChange24h)}</span>
+          <div className="change-glow"></div>
         </div>
       </div>
       
       <div className="crypto-stats">
         <div className="stat-row">
           <div className="stat-item">
-            <span className="stat-label">Market Cap</span>
-            <span className="stat-value">
-              {formatCompactNumber(crypto.quote.USD.market_cap)}
-            </span>
+            <div className="stat-icon market-cap">📊</div>
+            <div className="stat-content">
+              <span className="stat-label">Market Cap</span>
+              <span className="stat-value">
+                {formatCompactNumber(crypto.quote.USD.market_cap)}
+              </span>
+            </div>
           </div>
           <div className="stat-item">
-            <span className="stat-label">Volume 24h</span>
-            <span className="stat-value">
-              {formatCompactNumber(crypto.quote.USD.volume_24h)}
-            </span>
+            <div className="stat-icon volume">📈</div>
+            <div className="stat-content">
+              <span className="stat-label">Volume 24h</span>
+              <span className="stat-value">
+                {formatCompactNumber(crypto.quote.USD.volume_24h)}
+              </span>
+            </div>
           </div>
         </div>
         
         <div className="stat-row">
           <div className="stat-item">
-            <span className="stat-label">7d Change</span>
-            <span className={`stat-value ${isPositive7d ? 'positive' : 'negative'}`}>
-              {formatPercentage(priceChange7d)}
-            </span>
+            <div className="stat-icon weekly">📅</div>
+            <div className="stat-content">
+              <span className="stat-label">7d Change</span>
+              <span className={`stat-value ${isPositive7d ? 'positive' : 'negative'}`}>
+                {formatPercentage(priceChange7d)}
+              </span>
+            </div>
           </div>
           <div className="stat-item">
-            <span className="stat-label">Supply</span>
-            <span className="stat-value">
-              {crypto.circulating_supply ? formatCompactNumber(crypto.circulating_supply) : 'N/A'}
-            </span>
+            <div className="stat-icon supply">🪙</div>
+            <div className="stat-content">
+              <span className="stat-label">Supply</span>
+              <span className="stat-value">
+                {crypto.circulating_supply ? formatCompactNumber(crypto.circulating_supply) : 'N/A'}
+              </span>
+            </div>
           </div>
+        </div>
+        
+        {/* Performance indicator bar */}
+        <div className="performance-bar">
+          <div className="performance-label">24h Performance</div>
+          <div className="performance-track">
+            <div 
+              className={`performance-fill ${isPositive24h ? 'positive' : 'negative'}`}
+              style={{ 
+                width: `${Math.min(Math.abs(priceChange24h) * 2, 100)}%`,
+                animationDelay: '0.5s'
+              }}
+            ></div>
+          </div>
+          <div className="performance-value">{formatPercentage(priceChange24h)}</div>
         </div>
       </div>
 
       <div className="crypto-chart-placeholder">
-        <BarChart3 size={20} />
-        <span>Price Chart</span>
+        <div className="chart-icon-container">
+          <BarChart3 size={20} />
+          <div className="chart-pulse"></div>
+        </div>
+        <span>Live Chart</span>
+        <div className="chart-coming-soon">Coming Soon</div>
       </div>
+      
+      {/* Hover overlay effect */}
+      <div className="card-hover-overlay"></div>
     </div>
   );
 });
@@ -202,12 +276,28 @@ const CryptoGrid = ({ cryptoData, loading, loadingMore, error, hasMoreData, onRe
       <section className="crypto-section" id="markets">
         <div className="crypto-container">
           <div className="section-header">
-            <h2>Live Cryptocurrency Prices</h2>
-            <p>Real-time market data and trading insights</p>
+            <div className="header-content">
+              <div className="header-main">
+                <h2>Live Cryptocurrency Prices</h2>
+                <div className="header-subtitle">
+                  <span>Real-time market data and trading insights</span>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="loading-container">
-            <div className="loading-spinner"></div>
+            <div className="loading-animation">
+              <div className="loading-spinner"></div>
+              <div className="loading-ripples">
+                <div className="ripple"></div>
+                <div className="ripple"></div>
+                <div className="ripple"></div>
+              </div>
+            </div>
             <p className="loading-text">Fetching live market data...</p>
+            <div className="loading-progress">
+              <div className="progress-bar"></div>
+            </div>
           </div>
         </div>
       </section>
@@ -219,15 +309,25 @@ const CryptoGrid = ({ cryptoData, loading, loadingMore, error, hasMoreData, onRe
       <section className="crypto-section" id="markets">
         <div className="crypto-container">
           <div className="section-header">
-            <h2>Live Cryptocurrency Prices</h2>
-            <p>Real-time market data and trading insights</p>
+            <div className="header-content">
+              <div className="header-main">
+                <h2>Live Cryptocurrency Prices</h2>
+                <div className="header-subtitle">
+                  <span>Real-time market data and trading insights</span>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="error-container">
+            <div className="error-icon">⚠️</div>
             <h3>Unable to Load Market Data</h3>
             <p>Error: {error}</p>
-            <button className="refresh-btn" onClick={handleRefresh}>
-              <RefreshCw size={16} />
-              Retry Connection
+            <button className="refresh-btn error-retry" onClick={handleRefresh}>
+              <div className="refresh-icon">
+                <RefreshCw size={16} />
+              </div>
+              <span>Retry Connection</span>
+              <div className="refresh-ripple"></div>
             </button>
           </div>
         </div>
@@ -239,67 +339,113 @@ const CryptoGrid = ({ cryptoData, loading, loadingMore, error, hasMoreData, onRe
     <section className="crypto-section" id="markets">
       <div className="crypto-container">
         <div className="section-header">
-          <h2>Live Cryptocurrency Prices</h2>
-          <p>Real-time market data and trading insights</p>
-          <button className="refresh-btn" onClick={handleRefresh}>
-            <RefreshCw size={16} />
-            Refresh Data
-          </button>
+          <div className="header-content">
+            <div className="header-main">
+              <h2>Live Cryptocurrency Prices</h2>
+              <div className="header-subtitle">
+                <span>Real-time market data and trading insights</span>
+                <div className="live-status">
+                  <div className="live-dot"></div>
+                  <span>Live Updates</span>
+                </div>
+              </div>
+            </div>
+            <button className="refresh-btn" onClick={handleRefresh}>
+              <div className="refresh-icon">
+                <RefreshCw size={16} />
+              </div>
+              <span>Refresh Data</span>
+              <div className="refresh-ripple"></div>
+            </button>
+          </div>
         </div>
 
         {/* Enhanced Controls */}
         <div className="crypto-controls">
-          <div className="search-container">
-            <Search size={18} className="search-icon" />
-            <input
-              type="text"
-              placeholder="Search cryptocurrencies..."
-              value={searchTerm}
-              onChange={handleSearchChange}
-              className="search-input"
-            />
-          </div>
-          
-          <div className="filter-container">
-            <Filter size={18} className="filter-icon" />
-            <select
-              value={sortBy}
-              onChange={handleSortChange}
-              className="filter-select"
-            >
-              <option value="market_cap">Market Cap</option>
-              <option value="price">Price</option>
-              <option value="change_24h">24h Change</option>
-              <option value="volume">Volume</option>
-              <option value="name">Name</option>
-            </select>
-          </div>
+          <div className="controls-group">
+            <div className="search-container">
+              <Search size={18} className="search-icon" />
+              <input
+                type="text"
+                placeholder="Search cryptocurrencies..."
+                value={searchTerm}
+                onChange={handleSearchChange}
+                className="search-input"
+              />
+              {searchTerm && (
+                <button 
+                  className="clear-search"
+                  onClick={() => setSearchTerm('')}
+                  aria-label="Clear search"
+                >
+                  ×
+                </button>
+              )}
+            </div>
+            
+            <div className="filter-container">
+              <Filter size={18} className="filter-icon" />
+              <select
+                value={sortBy}
+                onChange={handleSortChange}
+                className="filter-select"
+              >
+                <option value="market_cap">Market Cap</option>
+                <option value="price">Price</option>
+                <option value="change_24h">24h Change</option>
+                <option value="volume">Volume</option>
+                <option value="name">Name</option>
+              </select>
+            </div>
 
-          {favorites.size > 0 && (
-            <button
-              className={`favorites-toggle ${showOnlyFavorites ? 'active' : ''}`}
-              onClick={() => setShowOnlyFavorites(!showOnlyFavorites)}
-            >
-              <Star size={16} />
-              {showOnlyFavorites ? 'Show All' : `Favorites (${favorites.size})`}
-            </button>
-          )}
+            {favorites.size > 0 && (
+              <button
+                className={`favorites-toggle ${showOnlyFavorites ? 'active' : ''}`}
+                onClick={() => setShowOnlyFavorites(!showOnlyFavorites)}
+              >
+                <Star size={16} />
+                <span>{showOnlyFavorites ? 'Show All' : `Favorites (${favorites.size})`}</span>
+              </button>
+            )}
+          </div>
         </div>
 
-        {/* Performance Stats */}
+        {/* Enhanced Performance Stats */}
         <div className="market-overview">
-          <div className="overview-stat">
-            <Zap size={16} />
-            <span>{filteredAndSortedData.length} Cryptocurrencies</span>
-          </div>
-          <div className="overview-stat">
-            <TrendingUp size={16} />
-            <span>Live Updates</span>
-          </div>
-          {favorites.size > 0 && (
+          <div className="overview-stats">
             <div className="overview-stat">
-              <Star size={16} />
-              <span>{favorites.size} Favorites</span>
+              <div className="stat-icon-bg">
+                <Zap size={16} />
+              </div>
+              <div className="stat-info">
+                <span className="stat-number">{filteredAndSortedData.length}</span>
+                <span className="stat-text">Cryptocurrencies</span>
+              </div>
+            </div>
+            <div className="overview-stat">
+              <div className="stat-icon-bg trending">
+                <TrendingUp size={16} />
+              </div>
+              <div className="stat-info">
+                <span className="stat-number">Live</span>
+                <span className="stat-text">Real-time Updates</span>
+              </div>
+            </div>
+            {favorites.size > 0 && (
+              <div className="overview-stat">
+                <div className="stat-icon-bg favorites">
+                  <Star size={16} />
+                </div>
+                <div className="stat-info">
+                  <span className="stat-number">{favorites.size}</span>
+                  <span className="stat-text">Favorites</span>
+                </div>
+              </div>
+            )}
+          </div>
+          {cryptoData.length > 0 && (
+            <div className="market-summary">
+              <span>Last updated: Just now</span>
             </div>
           )}
         </div>
