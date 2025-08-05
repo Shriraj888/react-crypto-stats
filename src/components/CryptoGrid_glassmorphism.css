@@ -1,0 +1,378 @@
+/* Glassmorphism Enhancement Styles - Inspired by reference image */
+
+/* Enhanced Section Header with Glassmorphism */
+.section-header {
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 4;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.section-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0.02) 50%, 
+    rgba(255, 255, 255, 0.08) 100%);
+  border-radius: 24px;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.header-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Enhanced Header Title */
+.header-title-container {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.header-main h2 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 900;
+  color: var(--text-primary);
+  margin: 0;
+  font-family: 'Space Grotesk', sans-serif;
+  line-height: 1.1;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 1) 0%, 
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0.9) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+}
+
+/* Enhanced Live Badge */
+.header-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(0, 255, 136, 0.1);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(0, 255, 136, 0.9);
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 4px 20px rgba(0, 255, 136, 0.1),
+    inset 0 1px 0 rgba(0, 255, 136, 0.2);
+}
+
+.header-badge.error {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--text-secondary);
+  box-shadow: 
+    0 4px 20px rgba(255, 255, 255, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.live-indicator-dot {
+  width: 10px;
+  height: 10px;
+  background: #00ff88;
+  border-radius: 50%;
+  animation: liveGlow 2s ease-in-out infinite;
+  box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7);
+}
+
+@keyframes liveGlow {
+  0%, 100% { 
+    opacity: 1; 
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7);
+  }
+  50% { 
+    opacity: 0.8; 
+    transform: scale(1.1);
+    box-shadow: 0 0 0 8px rgba(0, 255, 136, 0);
+  }
+}
+
+/* Enhanced Subtitle */
+.header-subtitle {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+
+.header-subtitle > span {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1.4;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.live-status {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background: #00ff88;
+  border-radius: 50%;
+  animation: livePulse 2s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.3); }
+}
+
+/* Enhanced Loading States with Glassmorphism */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 8rem 2rem;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  margin: 2rem 0;
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 6rem 2rem;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  backdrop-filter: blur(25px);
+  margin: 2rem auto;
+  max-width: 600px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.no-results {
+  text-align: center;
+  padding: 6rem 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  backdrop-filter: blur(25px);
+  margin: 2rem auto;
+  max-width: 600px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Enhanced Input Fields */
+.search-input,
+.filter-select {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 16px !important;
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.search-input:focus,
+.filter-select:focus {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 0 2px rgba(255, 255, 255, 0.1),
+    0 4px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Enhanced Responsive Design for Glassmorphism */
+@media (max-width: 1024px) {
+  .crypto-section::before {
+    font-size: clamp(6rem, 15vw, 18rem);
+  }
+  
+  .section-header {
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+  }
+  
+  .controls-group {
+    padding: 1.25rem;
+    gap: 1.25rem;
+  }
+  
+  .market-overview {
+    padding: 1.75rem;
+    margin-bottom: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .crypto-section {
+    padding: 4rem 0;
+  }
+  
+  .crypto-section::before {
+    font-size: clamp(4rem, 12vw, 14rem);
+  }
+  
+  .crypto-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+  
+  .crypto-card {
+    padding: 1.75rem;
+    border-radius: 18px;
+  }
+  
+  .section-header {
+    padding: 1.75rem;
+    border-radius: 20px;
+  }
+  
+  .header-title-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .header-subtitle {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .controls-group {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1.5rem;
+    border-radius: 18px;
+  }
+  
+  .market-overview {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border-radius: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .crypto-container {
+    padding: 0 1rem;
+  }
+  
+  .crypto-section::before {
+    font-size: clamp(3rem, 10vw, 10rem);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+  
+  .crypto-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+  
+  .crypto-card {
+    padding: 1.5rem;
+    border-radius: 16px;
+  }
+  
+  .section-header {
+    padding: 1.5rem;
+    border-radius: 18px;
+    margin-bottom: 2rem;
+  }
+  
+  .header-main h2 {
+    font-size: clamp(1.75rem, 8vw, 2.5rem);
+  }
+  
+  .header-badge {
+    padding: 0.6rem 1.25rem;
+    font-size: 0.8rem;
+  }
+  
+  .loading-container,
+  .error-container,
+  .no-results {
+    padding: 4rem 1.5rem;
+    border-radius: 20px;
+    margin: 1.5rem;
+  }
+}
+
+/* Performance optimizations for glassmorphism */
+@media (prefers-reduced-motion: reduce) {
+  .live-indicator-dot,
+  .live-dot {
+    animation: none;
+  }
+  
+  .header-main h2 {
+    background: var(--text-primary);
+    -webkit-text-fill-color: unset;
+  }
+  
+  .crypto-card:hover {
+    transform: none;
+  }
+}
+
+/* GPU acceleration for better performance */
+.crypto-section,
+.crypto-card,
+.section-header,
+.controls-group,
+.market-overview {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
