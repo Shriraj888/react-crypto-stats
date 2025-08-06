@@ -9,23 +9,26 @@
   min-height: 100vh;
 }
 
-/* Static Background Text at Section Start */
+/* Static Background Text at Center Top - Responsive */
 .crypto-section::before {
   content: 'MARKET';
   position: absolute;
-  top: 2rem;
+  top: 8%;
   left: 50%;
-  transform: translateX(-50%);
-  font-size: clamp(12rem, 30vw, 40rem);
+  transform: translate(-50%, -50%);
+  font-size: clamp(8rem, 25vw, 35rem);
   font-weight: 900;
-  color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.35);
   font-family: 'Space Grotesk', sans-serif;
-  letter-spacing: 0.2em;
+  letter-spacing: clamp(0.1em, 0.5vw, 0.2em);
   text-transform: uppercase;
   z-index: 1;
   pointer-events: none;
   user-select: none;
   white-space: nowrap;
+  text-align: center;
+  width: 100%;
+  overflow: hidden;
 }
 
 .crypto-section::after {
@@ -510,6 +513,13 @@
   .stats-grid {
     gap: 0.75rem 1rem;
   }
+  
+  /* Responsive "MARKET" text for tablets */
+  .crypto-section::before {
+    font-size: clamp(6rem, 20vw, 25rem);
+    top: 6%;
+    letter-spacing: clamp(0.08em, 0.4vw, 0.15em);
+  }
 }
 
 @media (max-width: 640px) {
@@ -529,6 +539,30 @@
   .price-chart {
     width: 60px;
     height: 24px;
+  }
+  
+  /* Responsive "MARKET" text for mobile */
+  .crypto-section::before {
+    font-size: clamp(4rem, 18vw, 18rem);
+    top: 4%;
+    letter-spacing: clamp(0.05em, 0.3vw, 0.12em);
+  }
+}
+
+/* Very small devices */
+@media (max-width: 480px) {
+  .crypto-section::before {
+    font-size: clamp(3rem, 16vw, 14rem);
+    top: 3%;
+    letter-spacing: clamp(0.03em, 0.25vw, 0.1em);
+  }
+}
+
+/* Landscape phones */
+@media (max-width: 896px) and (orientation: landscape) {
+  .crypto-section::before {
+    font-size: clamp(3rem, 15vw, 16rem);
+    top: 2%;
   }
 }
 
