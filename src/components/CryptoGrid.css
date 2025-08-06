@@ -9,18 +9,18 @@
   min-height: 100vh;
 }
 
-/* Static Background Text at Center Top - Responsive */
+/* Enhanced Static Background Text at Center Top - Responsive & Zoom Compatible */
 .crypto-section::before {
   content: 'MARKET';
   position: absolute;
-  top: 8%;
+  top: 5%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: clamp(8rem, 25vw, 35rem);
+  font-size: clamp(6rem, 20vw, 28rem);
   font-weight: 900;
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.4);
   font-family: 'Space Grotesk', sans-serif;
-  letter-spacing: clamp(0.1em, 0.5vw, 0.2em);
+  letter-spacing: clamp(0.08em, 0.4vw, 0.18em);
   text-transform: uppercase;
   z-index: 1;
   pointer-events: none;
@@ -29,6 +29,14 @@
   text-align: center;
   width: 100%;
   overflow: hidden;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Enhanced for better zoom compatibility */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .crypto-section::after {
@@ -40,7 +48,7 @@
   bottom: 0;
   background: radial-gradient(
     ellipse at center,
-    rgba(255, 255, 255, 0.01) 0%,
+    rgba(255, 255, 255, 0.466) 0%,
     transparent 70%
   );
   z-index: 1;
@@ -514,11 +522,12 @@
     gap: 0.75rem 1rem;
   }
   
-  /* Responsive "MARKET" text for tablets */
+  /* Enhanced MARKET text for tablets - Better visibility and scaling */
   .crypto-section::before {
-    font-size: clamp(6rem, 20vw, 25rem);
-    top: 6%;
-    letter-spacing: clamp(0.08em, 0.4vw, 0.15em);
+    font-size: clamp(4.5rem, 16vw, 20rem);
+    top: 3%;
+    letter-spacing: clamp(0.06em, 0.35vw, 0.14em);
+    color: rgba(255, 255, 255, 0.45);
   }
 }
 
@@ -541,28 +550,61 @@
     height: 24px;
   }
   
-  /* Responsive "MARKET" text for mobile */
+  /* Enhanced MARKET text for mobile - Optimized for small screens */
   .crypto-section::before {
-    font-size: clamp(4rem, 18vw, 18rem);
-    top: 4%;
-    letter-spacing: clamp(0.05em, 0.3vw, 0.12em);
+    font-size: clamp(3rem, 14vw, 14rem);
+    top: 2%;
+    letter-spacing: clamp(0.04em, 0.25vw, 0.1em);
+    color: rgba(255, 255, 255, 0.5);
   }
 }
 
-/* Very small devices */
+/* Very small devices - Extra small phones */
 @media (max-width: 480px) {
   .crypto-section::before {
-    font-size: clamp(3rem, 16vw, 14rem);
-    top: 3%;
-    letter-spacing: clamp(0.03em, 0.25vw, 0.1em);
+    font-size: clamp(2.5rem, 12vw, 10rem);
+    top: 1.5%;
+    letter-spacing: clamp(0.03em, 0.2vw, 0.08em);
+    color: rgba(255, 255, 255, 0.55);
   }
 }
 
-/* Landscape phones */
+/* Landscape orientation optimization */
 @media (max-width: 896px) and (orientation: landscape) {
   .crypto-section::before {
-    font-size: clamp(3rem, 15vw, 16rem);
-    top: 2%;
+    font-size: clamp(2.5rem, 12vw, 12rem);
+    top: 1%;
+    letter-spacing: clamp(0.03em, 0.2vw, 0.08em);
+  }
+}
+
+/* Ultra small devices (like old iPhones) */
+@media (max-width: 375px) {
+  .crypto-section::before {
+    font-size: clamp(2rem, 10vw, 8rem);
+    top: 1%;
+    letter-spacing: clamp(0.02em, 0.15vw, 0.06em);
+    color: rgba(255, 255, 255, 0.6);
+  }
+}
+
+/* Large desktop screens - Enhanced visibility */
+@media (min-width: 1440px) {
+  .crypto-section::before {
+    font-size: clamp(8rem, 15vw, 32rem);
+    top: 4%;
+    letter-spacing: clamp(0.1em, 0.3vw, 0.2em);
+    color: rgba(255, 255, 255, 0.35);
+  }
+}
+
+/* 4K displays optimization */
+@media (min-width: 2560px) {
+  .crypto-section::before {
+    font-size: clamp(12rem, 12vw, 40rem);
+    top: 5%;
+    letter-spacing: clamp(0.12em, 0.25vw, 0.22em);
+    color: rgba(255, 255, 255, 0.3);
   }
 }
 
@@ -577,6 +619,37 @@
   .live-pulse {
     transition: none;
     animation: none;
+  }
+}
+
+/* Browser zoom compatibility optimizations */
+@media (min-resolution: 96dpi) {
+  .crypto-section::before {
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+  }
+}
+
+@media (min-resolution: 144dpi) {
+  .crypto-section::before {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* High zoom levels support (125%, 150%, 200%) */
+@media (min-width: 1920px) and (max-width: 2560px) {
+  .crypto-section::before {
+    font-size: clamp(6rem, 18vw, 30rem);
+    letter-spacing: clamp(0.08em, 0.35vw, 0.18em);
+  }
+}
+
+/* Medium zoom optimization */
+@media (min-width: 1366px) and (max-width: 1919px) {
+  .crypto-section::before {
+    font-size: clamp(5rem, 17vw, 26rem);
+    letter-spacing: clamp(0.07em, 0.32vw, 0.16em);
   }
 }
 
