@@ -537,12 +537,17 @@
   }
   
   .crypto-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    /* Override the minmax constraint for mobile */
+    grid-template-columns: 1fr 1fr;
   }
   
   .crypto-card {
     padding: 1rem;
+    /* Ensure cards fit properly on mobile */
+    min-width: 0;
+    max-width: 100%;
   }
   
   .price-chart {
@@ -552,39 +557,89 @@
   
   /* Enhanced MARKET text for mobile - Optimized for small screens */
   .crypto-section::before {
-    font-size: clamp(3rem, 14vw, 14rem);
+    font-size: clamp(2.5rem, 12vw, 12rem) !important;
     top: 2%;
-    letter-spacing: clamp(0.04em, 0.25vw, 0.1em);
+    letter-spacing: clamp(0.03em, 0.2vw, 0.08em);
     color: rgba(255, 255, 255, 0.5);
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow: visible !important;
+    width: auto !important;
+    min-width: 100% !important;
+    display: block !important;
+    text-align: center !important;
   }
 }
 
 /* Very small devices - Extra small phones */
 @media (max-width: 480px) {
+  .crypto-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.5rem;
+  }
+  
+  .crypto-card {
+    padding: 0.75rem;
+    min-width: 0;
+    max-width: 100%;
+  }
+  
   .crypto-section::before {
-    font-size: clamp(2.5rem, 12vw, 10rem);
+    font-size: clamp(2rem, 10vw, 8rem) !important;
     top: 1.5%;
-    letter-spacing: clamp(0.03em, 0.2vw, 0.08em);
+    letter-spacing: clamp(0.02em, 0.15vw, 0.06em);
     color: rgba(255, 255, 255, 0.55);
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow: visible !important;
+    width: auto !important;
+    min-width: 100% !important;
+    display: block !important;
+    text-align: center !important;
   }
 }
 
 /* Landscape orientation optimization */
 @media (max-width: 896px) and (orientation: landscape) {
   .crypto-section::before {
-    font-size: clamp(2.5rem, 12vw, 12rem);
+    font-size: clamp(2rem, 10vw, 10rem) !important;
     top: 1%;
-    letter-spacing: clamp(0.03em, 0.2vw, 0.08em);
+    letter-spacing: clamp(0.02em, 0.15vw, 0.06em);
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow: visible !important;
+    width: auto !important;
+    min-width: 100% !important;
+    display: block !important;
+    text-align: center !important;
   }
 }
 
 /* Ultra small devices (like old iPhones) */
 @media (max-width: 375px) {
   .crypto-section::before {
-    font-size: clamp(2rem, 10vw, 8rem);
+    font-size: clamp(1.8rem, 8vw, 6rem) !important;
     top: 1%;
-    letter-spacing: clamp(0.02em, 0.15vw, 0.06em);
+    letter-spacing: clamp(0.02em, 0.12vw, 0.05em);
     color: rgba(255, 255, 255, 0.6);
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow: visible !important;
+    width: auto !important;
+    min-width: 100% !important;
+    display: block !important;
+    text-align: center !important;
+  }
+  
+  .crypto-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.5rem;
+  }
+  
+  .crypto-card {
+    padding: 0.75rem;
+    min-width: 0;
+    max-width: 100%;
   }
 }
 
@@ -2420,19 +2475,22 @@
   }
   
   .crypto-section::before {
-    font-size: clamp(3rem, 10vw, 10rem);
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
+    font-size: clamp(2.5rem, 12vw, 12rem) !important;
+    writing-mode: horizontal-tb !important;
+    text-orientation: mixed !important;
+    white-space: nowrap !important;
+    display: block !important;
+    text-align: center !important;
   }
   
   .crypto-grid {
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.75rem;
     margin-top: 2rem;
   }
   
   .crypto-card {
-    padding: 1.5rem;
+    padding: 1rem;
     border-radius: 16px;
   }
   
