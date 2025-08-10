@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import React, { useState, useCallback, useMemo } from 'react';
+import { Mail, Phone, MapPin, CheckCircle, AlertCircle } from 'lucide-react';
 import './Contact.css';
 
 const Contact = () => {
@@ -10,15 +10,15 @@ const Contact = () => {
   });
   const [submitStatus, setSubmitStatus] = useState(null);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
-  };
+  }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = useCallback((e) => {
     e.preventDefault();
     
     // Simulate form submission
@@ -33,14 +33,41 @@ const Contact = () => {
         setSubmitStatus(null);
       }, 3000);
     }, 1500);
-  };
+  }, []);
+
+  // Memoize form validation
+  const isFormValid = useMemo(() => {
+    return formData.name.trim() && 
+           formData.email.trim() && 
+           formData.message.trim() &&
+           formData.email.includes('@');
+  }, [formData]);
+
+  // Memoize contact methods to prevent re-rendering
+  const contactMethods = useMemo(() => [
+    {
+      icon: Mail,
+      title: "Email us",
+      detail: "johndygreen@gmail.com",
+      href: "mailto:johndygreen@gmail.com"
+    },
+    {
+      icon: Phone,
+      title: "Call us",
+      detail: "(903) 905-4567",
+      href: "tel:+19039054567"
+    },
+    {
+      icon: MapPin,
+      title: "Our location",
+      detail: "Vendig Street, NY, US",
+      href: "https://maps.google.com/?q=Vendig+Street+NY+US"
+    }
+  ], []);
 
   return (
     <section className="contact-section" id="contact">
       <div className="contact-container">
-        {/* Large CONTACT Background Text */}
-        <div className="contact-bg-text">CONTACT</div>
-        
         <div className="contact-content">
           {/* Left side - Contact Info */}
           <div className="contact-info">
@@ -56,38 +83,25 @@ const Contact = () => {
             </div>
 
             <div className="contact-methods">
-              <div className="contact-method">
-                <div className="method-icon">
-                  <Mail size={20} />
-                </div>
-                <div className="method-details">
-                  <h4>Email us</h4>
-                  <p>johndygreen@gmail.com</p>
-                </div>
-                <div className="method-arrow">→</div>
-              </div>
-
-              <div className="contact-method">
-                <div className="method-icon">
-                  <Phone size={20} />
-                </div>
-                <div className="method-details">
-                  <h4>Call us</h4>
-                  <p>(903) 905-4567</p>
-                </div>
-                <div className="method-arrow">→</div>
-              </div>
-
-              <div className="contact-method">
-                <div className="method-icon">
-                  <MapPin size={20} />
-                </div>
-                <div className="method-details">
-                  <h4>Our location</h4>
-                  <p>Vendig Street, NY, US</p>
-                </div>
-                <div className="method-arrow">→</div>
-              </div>
+              {contactMethods.map((method, index) => (
+                <a
+                  key={index}
+                  href={method.href}
+                  className="contact-method"
+                  target={method.href.startsWith('http') ? '_blank' : '_self'}
+                  rel={method.href.startsWith('http') ? 'noopener noreferrer' : ''}
+                  aria-label={`Contact us via ${method.title}`}
+                >
+                  <div className="method-icon">
+                    <method.icon size={20} />
+                  </div>
+                  <div className="method-details">
+                    <h4>{method.title}</h4>
+                    <p>{method.detail}</p>
+                  </div>
+                  <div className="method-arrow">→</div>
+                </a>
+              ))}
             </div>
           </div>
 
@@ -136,7 +150,8 @@ const Contact = () => {
               <button 
                 type="submit" 
                 className="submit-btn"
-                disabled={submitStatus === 'loading'}
+                disabled={submitStatus === 'loading' || !isFormValid}
+                aria-label={submitStatus === 'loading' ? 'Sending message...' : 'Submit contact form'}
               >
                 {submitStatus === 'loading' ? (
                   <>

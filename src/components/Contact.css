@@ -1,51 +1,69 @@
 /* Modern Contact Section - Dark Theme with Glassmorphism */
 
 .contact-section {
-  padding: 8rem 2rem;
-  background: #0a0a0a;
+  padding: 8rem 0;
+  background: var(--primary-bg);
   position: relative;
   overflow: hidden;
   min-height: 100vh;
-  display: flex;
-  align-items: center;
 }
 
+/* Enhanced Static Background Text at Center Top - Optimized for CONTACT word length */
 .contact-section::before {
+  content: 'CONTACT';
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(5rem, 18vw, 24rem);
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: clamp(0.06em, 0.35vw, 0.15em);
+  text-transform: uppercase;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  text-align: center;
+  width: 100%;
+  overflow: hidden;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Enhanced for better zoom compatibility at 100% zoom */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.contact-section::after {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.01) 0%, transparent 50%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.466) 0%,
+    transparent 70%
+  );
+  z-index: 1;
   pointer-events: none;
 }
 
 .contact-container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
+  padding: 0 2rem;
   position: relative;
   z-index: 2;
   width: 100%;
 }
 
-/* Large Background Text */
-.contact-bg-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: clamp(8rem, 15vw, 20rem);
-  font-weight: 900;
-  color: rgba(255, 255, 255, 0.03);
-  font-family: 'Space Grotesk', sans-serif;
-  letter-spacing: -0.05em;
-  white-space: nowrap;
-  pointer-events: none;
-  z-index: 1;
-}
+/* Remove the old background text as it's now handled by ::before */
 
 .contact-content {
   display: grid;
@@ -54,6 +72,7 @@
   align-items: start;
   position: relative;
   z-index: 3;
+  padding-top: 8rem; /* Similar to crypto grid */
 }
 
 /* Left Side - Contact Info */
@@ -128,6 +147,9 @@
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  will-change: transform, background-color;
 }
 
 .contact-method::before {
@@ -149,6 +171,13 @@
   background: rgba(255, 255, 255, 0.06);
   border-color: rgba(255, 255, 255, 0.15);
   transform: translateX(4px);
+}
+
+.contact-method:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.3);
+  outline-offset: 2px;
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .method-icon {
@@ -277,6 +306,7 @@
   justify-content: center;
   gap: 0.5rem;
   margin-top: 1rem;
+  will-change: transform, box-shadow;
 }
 
 .submit-btn::before {
@@ -290,24 +320,30 @@
   transition: left 0.6s ease;
 }
 
-.submit-btn:hover::before {
+.submit-btn:hover:not(:disabled)::before {
   left: 100%;
 }
 
-.submit-btn:hover {
+.submit-btn:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
 }
 
-.submit-btn:active {
+.submit-btn:active:not(:disabled) {
   transform: translateY(0);
 }
 
 .submit-btn:disabled {
-  opacity: 0.6;
+  opacity: 0.4;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.submit-btn:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
 }
 
 .loading-spinner {
@@ -351,32 +387,19 @@
 }
 
 /* Responsive Design */
-@media (max-width: 1024px) {
-  .contact-section {
-    padding: 6rem 1.5rem;
-  }
-  
-  .contact-content {
-    gap: 4rem;
-  }
-  
-  .contact-form-container {
-    padding: 2.5rem;
-  }
-}
-
 @media (max-width: 768px) {
   .contact-section {
-    padding: 4rem 1rem;
+    padding: 6rem 0;
+  }
+  
+  .contact-container {
+    padding: 0 1rem;
   }
   
   .contact-content {
     grid-template-columns: 1fr;
-    gap: 3rem;
-  }
-  
-  .contact-bg-text {
-    font-size: clamp(6rem, 12vw, 15rem);
+    gap: 4rem;
+    padding-top: 6rem;
   }
   
   .contact-form-container {
@@ -391,23 +414,24 @@
     width: 36px;
     height: 36px;
   }
+  
+  /* Enhanced CONTACT text for tablets - Better visibility and scaling */
+  .contact-section::before {
+    font-size: clamp(4.5rem, 16vw, 20rem);
+    top: 6%;
+    letter-spacing: clamp(0.06em, 0.35vw, 0.14em);
+    color: rgba(255, 255, 255, 0.45);
+  }
 }
 
 @media (max-width: 640px) {
-  .contact-section {
-    padding: 3rem 0.75rem;
-  }
-  
-  .contact-header {
-    margin-bottom: 2rem;
+  .contact-container {
+    padding: 0 1rem;
   }
   
   .contact-content {
-    gap: 2rem;
-  }
-  
-  .contact-bg-text {
-    font-size: clamp(4rem, 10vw, 12rem);
+    gap: 3rem;
+    padding-top: 5rem;
   }
   
   .contact-form-container {
@@ -442,15 +466,35 @@
     padding: 0.875rem 1.5rem;
     font-size: 0.95rem;
   }
+  
+  /* Enhanced CONTACT text for mobile - Optimized for small screens */
+  .contact-section::before {
+    font-size: clamp(2.5rem, 12vw, 12rem) !important;
+    top: 4%;
+    letter-spacing: clamp(0.03em, 0.2vw, 0.08em);
+    color: rgba(255, 255, 255, 0.5);
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow: visible !important;
+    width: auto !important;
+    min-width: 100% !important;
+    display: block !important;
+    text-align: center !important;
+  }
 }
 
 @media (max-width: 480px) {
   .contact-section {
-    padding: 2.5rem 0.5rem;
+    padding: 4rem 0;
   }
   
-  .contact-bg-text {
-    font-size: clamp(3rem, 8vw, 10rem);
+  .contact-container {
+    padding: 0 0.5rem;
+  }
+  
+  .contact-content {
+    gap: 2rem;
+    padding-top: 4rem;
   }
   
   .contact-form-container {
@@ -481,9 +525,133 @@
     padding: 0.875rem;
     font-size: 0.85rem;
   }
+  
+  /* Very small devices - Extra small phones */
+  .contact-section::before {
+    font-size: clamp(2rem, 10vw, 8rem) !important;
+    top: 3.5%;
+    letter-spacing: clamp(0.02em, 0.15vw, 0.06em);
+    color: rgba(255, 255, 255, 0.55);
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow: visible !important;
+    width: auto !important;
+    min-width: 100% !important;
+    display: block !important;
+    text-align: center !important;
+  }
 }
 
-/* Accessibility */
+/* Landscape orientation optimization */
+@media (max-width: 896px) and (orientation: landscape) {
+  .contact-section::before {
+    font-size: clamp(2rem, 10vw, 10rem) !important;
+    top: 3%;
+    letter-spacing: clamp(0.02em, 0.15vw, 0.06em);
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow: visible !important;
+    width: auto !important;
+    min-width: 100% !important;
+    display: block !important;
+    text-align: center !important;
+  }
+  
+  .contact-content {
+    padding-top: 3rem;
+  }
+}
+
+/* Ultra small devices (like old iPhones) */
+@media (max-width: 375px) {
+  .contact-section::before {
+    font-size: clamp(1.8rem, 8vw, 6rem) !important;
+    top: 3%;
+    letter-spacing: clamp(0.02em, 0.12vw, 0.05em);
+    color: rgba(255, 255, 255, 0.6);
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow: visible !important;
+    width: auto !important;
+    min-width: 100% !important;
+    display: block !important;
+    text-align: center !important;
+  }
+  
+  .contact-content {
+    padding-top: 3rem;
+  }
+}
+
+/* Large desktop screens - Enhanced visibility - Adjusted for CONTACT length */
+@media (min-width: 1440px) {
+  .contact-section::before {
+    font-size: clamp(7rem, 13vw, 26rem);
+    top: 7%;
+    letter-spacing: clamp(0.08em, 0.25vw, 0.16em);
+    color: rgba(255, 255, 255, 0.35);
+  }
+}
+
+/* 4K displays optimization - Adjusted for CONTACT length */
+@media (min-width: 2560px) {
+  .contact-section::before {
+    font-size: clamp(10rem, 10vw, 32rem);
+    top: 8%;
+    letter-spacing: clamp(0.1em, 0.2vw, 0.18em);
+    color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Browser zoom compatibility optimizations */
+@media (min-resolution: 96dpi) {
+  .contact-section::before {
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+  }
+}
+
+@media (min-resolution: 144dpi) {
+  .contact-section::before {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* High zoom levels support (125%, 150%, 200%) */
+@media (min-width: 1920px) and (max-width: 2560px) {
+  .contact-section::before {
+    font-size: clamp(5.5rem, 16vw, 24rem);
+    letter-spacing: clamp(0.06em, 0.3vw, 0.14em);
+  }
+}
+
+/* Standard desktop resolution optimization (1920x1080 at 100% zoom) */
+@media (min-width: 1600px) and (max-width: 1919px) {
+  .contact-section::before {
+    font-size: clamp(5rem, 15vw, 22rem);
+    letter-spacing: clamp(0.06em, 0.28vw, 0.14em);
+  }
+}
+
+/* Medium zoom optimization */
+@media (min-width: 1366px) and (max-width: 1599px) {
+  .contact-section::before {
+    font-size: clamp(4.5rem, 14vw, 20rem);
+    letter-spacing: clamp(0.05em, 0.26vw, 0.12em);
+  }
+}
+
+/* Common laptop resolution optimization (1366x768 at 100% zoom) */
+@media (min-width: 1024px) and (max-width: 1365px) {
+  .contact-section::before {
+    font-size: clamp(4rem, 12vw, 16rem);
+    letter-spacing: clamp(0.04em, 0.24vw, 0.1em);
+    top: 6%;
+  }
+}
+
+/* Performance optimizations */
 @media (prefers-reduced-motion: reduce) {
   .contact-method,
   .submit-btn,
@@ -496,7 +664,7 @@
   }
 }
 
-/* High contrast mode */
+/* Accessibility */
 @media (prefers-contrast: high) {
   .contact-method,
   .contact-form-container,
@@ -518,4 +686,13 @@
 .contact-method:focus {
   outline: 2px solid rgba(255, 255, 255, 0.5);
   outline-offset: 2px;
+}
+
+/* GPU acceleration hints */
+.contact-method,
+.contact-form-container,
+.submit-btn {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
