@@ -6,7 +6,6 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    subject: '',
     message: ''
   });
   const [submitStatus, setSubmitStatus] = useState(null);
@@ -27,7 +26,7 @@ const Contact = () => {
     
     setTimeout(() => {
       setSubmitStatus('success');
-      setFormData({ name: '', email: '', subject: '', message: '' });
+      setFormData({ name: '', email: '', message: '' });
       
       // Reset status after 3 seconds
       setTimeout(() => {
@@ -36,99 +35,92 @@ const Contact = () => {
     }, 1500);
   };
 
-  const contactInfo = [
-    {
-      icon: <Mail size={24} />,
-      title: "Email Us",
-      content: "support@cryptotracker.com",
-      description: "Get in touch via email"
-    },
-    {
-      icon: <Phone size={24} />,
-      title: "Call Us",
-      content: "+1 (555) 123-4567",
-      description: "24/7 customer support"
-    },
-    {
-      icon: <MapPin size={24} />,
-      title: "Visit Us",
-      content: "123 Blockchain Street, Crypto City, CC 12345",
-      description: "Our headquarters"
-    }
-  ];
-
   return (
     <section className="contact-section" id="contact">
       <div className="contact-container">
-        <div className="contact-header">
-          <h2>Get In Touch</h2>
-          <p>Have questions or need support? We're here to help you succeed in your crypto journey</p>
-        </div>
-
+        {/* Large CONTACT Background Text */}
+        <div className="contact-bg-text">CONTACT</div>
+        
         <div className="contact-content">
+          {/* Left side - Contact Info */}
           <div className="contact-info">
-            <h3>Contact Information</h3>
-            <div className="contact-cards">
-              {contactInfo.map((info, index) => (
-                <div key={index} className="contact-card">
-                  <div className="contact-icon">
-                    {info.icon}
-                  </div>
-                  <div className="contact-details">
-                    <h4>{info.title}</h4>
-                    <p className="contact-value">{info.content}</p>
-                    <p className="contact-desc">{info.description}</p>
-                  </div>
+            <div className="contact-header">
+              <div className="contact-badge">
+                <div className="contact-icon-small">
+                  <Mail size={16} />
                 </div>
-              ))}
+                <span>Contact</span>
+              </div>
+              <h2>Get in touch</h2>
+              <p>Have questions or ready to transform your business with AI automation?</p>
+            </div>
+
+            <div className="contact-methods">
+              <div className="contact-method">
+                <div className="method-icon">
+                  <Mail size={20} />
+                </div>
+                <div className="method-details">
+                  <h4>Email us</h4>
+                  <p>johndygreen@gmail.com</p>
+                </div>
+                <div className="method-arrow">→</div>
+              </div>
+
+              <div className="contact-method">
+                <div className="method-icon">
+                  <Phone size={20} />
+                </div>
+                <div className="method-details">
+                  <h4>Call us</h4>
+                  <p>(903) 905-4567</p>
+                </div>
+                <div className="method-arrow">→</div>
+              </div>
+
+              <div className="contact-method">
+                <div className="method-icon">
+                  <MapPin size={20} />
+                </div>
+                <div className="method-details">
+                  <h4>Our location</h4>
+                  <p>Vendig Street, NY, US</p>
+                </div>
+                <div className="method-arrow">→</div>
+              </div>
             </div>
           </div>
 
+          {/* Right side - Contact Form */}
           <div className="contact-form-container">
-            <h3>Send Us a Message</h3>
             <form onSubmit={handleSubmit} className="contact-form">
-              <div className="form-row">
-                <div className="form-group">
-                  <label htmlFor="name">Full Name</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    placeholder="Enter your full name"
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="email">Email Address</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    placeholder="Enter your email"
-                  />
-                </div>
-              </div>
-
               <div className="form-group">
-                <label htmlFor="subject">Subject</label>
                 <input
                   type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
+                  id="name"
+                  name="name"
+                  value={formData.name}
                   onChange={handleInputChange}
                   required
-                  placeholder="What's this about?"
+                  placeholder="Name"
+                  className="form-input"
                 />
               </div>
 
               <div className="form-group">
-                <label htmlFor="message">Message</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  placeholder="Email"
+                  className="form-input"
+                />
+              </div>
+
+              <div className="form-group">
                 <textarea
                   id="message"
                   name="message"
@@ -136,18 +128,19 @@ const Contact = () => {
                   onChange={handleInputChange}
                   required
                   rows="6"
-                  placeholder="Tell us how we can help you..."
+                  placeholder="Message"
+                  className="form-textarea"
                 ></textarea>
               </div>
 
               <button 
                 type="submit" 
-                className="modern-button"
+                className="submit-btn"
                 disabled={submitStatus === 'loading'}
               >
                 {submitStatus === 'loading' ? (
                   <>
-                    <div className="loading-spinner-small"></div>
+                    <div className="loading-spinner"></div>
                     Sending...
                   </>
                 ) : submitStatus === 'success' ? (
@@ -156,10 +149,7 @@ const Contact = () => {
                     Message Sent!
                   </>
                 ) : (
-                  <>
-                    <Send size={20} />
-                    Send Message
-                  </>
+                  'Submit'
                 )}
               </button>
 
