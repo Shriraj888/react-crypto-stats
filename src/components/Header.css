@@ -1,4 +1,10 @@
-/* Black & White Header - Clean & Responsive */
+/* Enhanced Smooth Scrolling & Responsive Header */
+
+/* Global smooth scrolling */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px; /* Account for fixed header */
+}
 
 .header {
   position: fixed;
@@ -15,12 +21,39 @@
   z-index: 1003;
   padding: 0;
   box-shadow: var(--shadow-lg);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, background-color, box-shadow;
+}
+
+/* Scrolled state - enhanced background and shadow */
+.header.scrolled {
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(40px);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.3),
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Scroll direction animations */
+.header.hide {
+  transform: translateX(-50%) translateY(-100%);
+  opacity: 0.8;
+}
+
+.header.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
 }
 
 .header:hover {
   background: var(--glass-bg-hover);
   border-color: var(--border-color-hover);
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: 
+    0 25px 70px rgba(0, 0, 0, 0.2),
+    0 10px 40px rgba(255, 255, 255, 0.05);
 }
 
 .header-container {
@@ -191,7 +224,7 @@
   transform: rotate(180deg);
 }
 
-/* Enhanced Mobile Navigation */
+/* Enhanced Mobile Navigation with Smooth Animations */
 .mobile-nav {
   position: absolute;
   top: calc(100% + 1rem);
@@ -212,9 +245,11 @@
   opacity: 0;
   visibility: hidden;
   transform: translateY(-20px) scale(0.95);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1002;
   pointer-events: none;
+  max-height: 0;
+  overflow: hidden;
 }
 
 .mobile-nav.open {
@@ -222,6 +257,8 @@
   visibility: visible;
   transform: translateY(0) scale(1);
   pointer-events: auto;
+  max-height: 400px;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .mobile-nav .nav-link {
@@ -233,12 +270,38 @@
   position: relative;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.08);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   color: #ffffff;
   text-decoration: none;
   display: block;
   font-weight: 500;
   letter-spacing: 0.5px;
+  transform: translateX(-20px);
+  opacity: 0;
+}
+
+/* Staggered animation for mobile nav links */
+.mobile-nav.open .nav-link:nth-child(1) {
+  animation: slideInStagger 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards;
+}
+
+.mobile-nav.open .nav-link:nth-child(2) {
+  animation: slideInStagger 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+}
+
+.mobile-nav.open .nav-link:nth-child(3) {
+  animation: slideInStagger 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+}
+
+.mobile-nav.open .nav-link:nth-child(4) {
+  animation: slideInStagger 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
+}
+
+@keyframes slideInStagger {
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 .mobile-nav .nav-link::before {
@@ -266,9 +329,10 @@
 
 .mobile-nav .nav-link:active {
   transform: translateX(2px) scale(0.98);
+  transition: transform 0.1s ease;
 }
 
-/* Mobile Overlay */
+/* Enhanced Mobile Overlay with Smooth Animations */
 .mobile-overlay {
   position: fixed;
   top: 0;
@@ -279,7 +343,19 @@
   backdrop-filter: blur(8px);
   z-index: 1001;
   opacity: 0;
-  animation: fadeIn 0.3s ease forwards;
+  animation: fadeInOverlay 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  will-change: opacity;
+}
+
+@keyframes fadeInOverlay {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(8px);
+  }
 }
 
 @keyframes fadeIn {
