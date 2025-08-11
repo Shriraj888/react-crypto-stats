@@ -1,44 +1,34 @@
 import React from 'react';
-import { Shield, TrendingUp, Users, Award, BarChart3, Globe } from 'lucide-react';
+import { Shield, TrendingUp, BarChart3, Globe } from 'lucide-react';
 import './About.css';
 
-const About = ({ cryptoData = [] }) => {
+const About = () => {
   const features = [
     {
-      icon: <TrendingUp size={32} />,
+      icon: <TrendingUp size={28} />,
       title: "Real-Time Data",
-      description: "Get live cryptocurrency prices and market data updated every second from reliable sources."
+      description: "Live cryptocurrency prices updated every second."
     },
     {
-      icon: <Shield size={32} />,
+      icon: <Shield size={28} />,
       title: "Secure Platform",
-      description: "Bank-level security with encrypted data transmission and secure API connections."
+      description: "Bank-level security with encrypted connections."
     },
     {
-      icon: <BarChart3 size={32} />,
+      icon: <BarChart3 size={28} />,
       title: "Advanced Analytics",
-      description: "Comprehensive market analysis tools with detailed charts and performance metrics."
+      description: "Comprehensive market analysis and charts."
     },
     {
-      icon: <Users size={32} />,
-      title: "Community Driven",
-      description: "Join thousands of crypto enthusiasts sharing insights and market predictions."
-    },
-    {
-      icon: <Award size={32} />,
-      title: "Award Winning",
-      description: "Recognized as one of the best crypto tracking platforms by industry experts."
-    },
-    {
-      icon: <Globe size={32} />,
+      icon: <Globe size={28} />,
       title: "Global Coverage",
-      description: "Track cryptocurrencies from exchanges worldwide with multi-currency support."
+      description: "Track cryptocurrencies from worldwide exchanges."
     }
   ];
 
   const stats = [
-    { number: "10K+", label: "Active Users" },
-    { number: "500+", label: "Cryptocurrencies" },
+    { number: "10K+", label: "Users" },
+    { number: "500+", label: "Cryptos" },
     { number: "99.9%", label: "Uptime" },
     { number: "24/7", label: "Support" }
   ];
@@ -48,13 +38,11 @@ const About = ({ cryptoData = [] }) => {
       <div className="about-container">
         <div className="about-header">
           <div className="about-badge">
-            <div className="about-icon-small">
-              <Shield size={16} />
-            </div>
+            <Shield size={16} />
             <span>About</span>
           </div>
-          <h2>About CryptoTracker</h2>
-          <p>Your trusted partner in cryptocurrency tracking and portfolio management</p>
+          <h2>Professional Crypto Tracking</h2>
+          <p>Your trusted platform for cryptocurrency market insights</p>
         </div>
 
         <div className="about-content">
@@ -62,14 +50,9 @@ const About = ({ cryptoData = [] }) => {
             <div className="story-text">
               <h3>Our Mission</h3>
               <p>
-                At CryptoTracker, we believe that everyone should have access to professional-grade 
-                cryptocurrency tracking tools. Our mission is to democratize crypto market data and 
-                provide users with the insights they need to make informed investment decisions.
-              </p>
-              <p>
-                Founded by a team of blockchain enthusiasts and financial experts, we've built a 
-                platform that combines cutting-edge technology with user-friendly design to deliver 
-                the ultimate crypto tracking experience.
+                We democratize cryptocurrency market data by providing professional-grade 
+                tracking tools for everyone. Make informed investment decisions with 
+                real-time insights and comprehensive analytics.
               </p>
             </div>
             <div className="story-stats">
@@ -93,15 +76,6 @@ const About = ({ cryptoData = [] }) => {
               </div>
             ))}
           </div>
-        </div>
-
-        <div className="about-cta">
-          <h3>Ready to Start Tracking?</h3>
-          <p>Join thousands of users who trust CryptoTracker for their crypto portfolio management</p>
-          <button className="modern-button">
-            <TrendingUp size={20} />
-            Get Started Today
-          </button>
         </div>
       </div>
     </section>
