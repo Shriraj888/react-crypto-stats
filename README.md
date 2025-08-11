@@ -1,4 +1,4 @@
-# 🚀 CryptoWeb - Cryptocurrency Analytics Platform
+# 🚀 CryptoTracker - Cryptocurrency Analytics Platform
 
 <div align="center">
 
