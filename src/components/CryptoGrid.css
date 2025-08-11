@@ -1380,58 +1380,78 @@
     transform: none;
   }
 }
-/* Modern Button and Control Styles */
 
-/* Enhanced Favorite Toggle */
-.favorite-toggle {
+/* Modern Rank Badge Design */
+.crypto-rank-modern {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
-  cursor: pointer;
+  justify-content: center;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  color: var(--text-secondary);
-  font-size: 0.8rem;
-  font-weight: 500;
-  user-select: none;
-  min-width: 70px;
+  min-width: 60px;
+  position: relative;
+  overflow: hidden;
 }
 
-.favorite-toggle:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.15);
-  color: var(--text-primary);
-  transform: translateY(-1px);
+.crypto-rank-modern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
 }
 
-.favorite-toggle:focus {
-  outline: 2px solid rgba(255, 255, 255, 0.3);
-  outline-offset: 2px;
+.crypto-rank-modern:hover::before {
+  left: 100%;
 }
 
-.favorite-toggle.favorited {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
-  color: var(--text-primary);
+.crypto-rank-modern:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.15),
+    0 4px 10px rgba(255, 255, 255, 0.1);
 }
 
-.favorite-toggle.favorited .favorite-icon {
-  color: #ffd700;
-  filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.3));
+.rank-number {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  letter-spacing: 0.5px;
+  position: relative;
+  z-index: 1;
 }
 
-.favorite-icon {
-  display: flex;
-  align-items: center;
-  transition: all 0.3s ease;
+/* Responsive styles for rank */
+@media (max-width: 768px) {
+  .crypto-rank-modern {
+    padding: 0.6rem 0.8rem;
+    min-width: 50px;
+  }
+  
+  .rank-number {
+    font-size: 0.8rem;
+  }
 }
 
-.favorite-text {
-  font-weight: 600;
-  letter-spacing: 0.3px;
+@media (max-width: 640px) {
+  .crypto-rank-modern {
+    padding: 0.5rem 0.7rem;
+    min-width: 45px;
+  }
+  
+  .rank-number {
+    font-size: 0.75rem;
+  }
 }
 
 /* Enhanced Rank Badge */
@@ -1893,12 +1913,6 @@
     font-size: 0.9rem;
   }
   
-  .favorite-toggle {
-    padding: 0.4rem 0.6rem;
-    font-size: 0.75rem;
-    min-width: 60px;
-  }
-  
   .crypto-rank-badge {
     padding: 0.35rem 0.5rem;
     min-width: 45px;
@@ -1962,10 +1976,6 @@
     flex-direction: column;
     gap: 0.5rem;
     align-items: stretch;
-  }
-  
-  .favorite-toggle {
-    justify-content: center;
   }
   
   .load-more-control {

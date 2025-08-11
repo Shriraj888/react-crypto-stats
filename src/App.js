@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo, useCallback, lazy, Suspense } from
 import './App.css';
 import Header from './components/Header';
 import Hero from './components/Hero';
+import perfMonitor from './utils/performance';
 
 // Lazy load components that are below the fold
 const CryptoGrid = lazy(() => import('./components/CryptoGrid'));
@@ -30,58 +31,61 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMoreData, setHasMoreData] = useState(true);
 
-  // Optimized fetch function with useCallback
+  // Optimized fetch function with performance tracking
   const fetchCryptoData = useCallback(async (page = 1, isLoadMore = false) => {
-    try {
-      if (!isLoadMore) {
-        setLoading(true);
-      } else {
-        setLoadingMore(true);
-      }
-      
-      // Using CoinGecko API with reduced data for better performance
-      const COINGECKO_URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=${page}&sparkline=false&price_change_percentage=24h`;
-      
-      const response = await fetch(COINGECKO_URL);
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch crypto data');
-      }
-      
-      const data = await response.json();
-      
-      // Optimized data transformation
-      const transformedData = data.map((coin, index) => ({
-        id: coin.id,
-        name: coin.name,
-        symbol: coin.symbol.toUpperCase(),
-        cmc_rank: coin.market_cap_rank || ((page - 1) * 20 + index + 1),
-        image: coin.image,
-        quote: {
-          USD: {
-            price: coin.current_price,
-            percent_change_24h: coin.price_change_percentage_24h || 0,
-            market_cap: coin.market_cap,
-            volume_24h: coin.total_volume
-          }
+    return await perfMonitor.measureApiCall('coingecko_markets', async () => {
+      try {
+        if (!isLoadMore) {
+          setLoading(true);
+        } else {
+          setLoadingMore(true);
         }
-      }));
-      
-      if (isLoadMore) {
-        setCryptoData(prevData => [...prevData, ...transformedData]);
-      } else {
-        setCryptoData(transformedData);
+        
+        // Using CoinGecko API with reduced data for better performance
+        const COINGECKO_URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=${page}&sparkline=false&price_change_percentage=24h`;
+        
+        const response = await fetch(COINGECKO_URL);
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch crypto data');
+        }
+        
+        const data = await response.json();
+        
+        // Optimized data transformation
+        const transformedData = data.map((coin, index) => ({
+          id: coin.id,
+          name: coin.name,
+          symbol: coin.symbol.toUpperCase(),
+          cmc_rank: coin.market_cap_rank || ((page - 1) * 20 + index + 1),
+          image: coin.image,
+          quote: {
+            USD: {
+              price: coin.current_price,
+              percent_change_24h: coin.price_change_percentage_24h || 0,
+              market_cap: coin.market_cap,
+              volume_24h: coin.total_volume
+            }
+          }
+        }));
+        
+        if (isLoadMore) {
+          setCryptoData(prevData => [...prevData, ...transformedData]);
+        } else {
+          setCryptoData(transformedData);
+        }
+        
+        setHasMoreData(data.length === 20);
+        setError(null);
+      } catch (err) {
+        setError(err.message);
+        console.error('Error fetching crypto data:', err);
+        throw err;
+      } finally {
+        setLoading(false);
+        setLoadingMore(false);
       }
-      
-      setHasMoreData(data.length === 20);
-      setError(null);
-    } catch (err) {
-      setError(err.message);
-      console.error('Error fetching crypto data:', err);
-    } finally {
-      setLoading(false);
-      setLoadingMore(false);
-    }
+    });
   }, []);
 
   // Optimized load more function
@@ -102,6 +106,13 @@ function App() {
 
   useEffect(() => {
     fetchCryptoData();
+    
+    // Log performance summary after initial load
+    const timer = setTimeout(() => {
+      perfMonitor.logReport();
+    }, 3000);
+    
+    return () => clearTimeout(timer);
   }, [fetchCryptoData]);
 
   return (

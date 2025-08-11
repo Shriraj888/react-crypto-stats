@@ -1,9 +1,9 @@
-import React, { useState, useMemo, useCallback, memo, useRef } from 'react';
-import { TrendingUp, TrendingDown, RefreshCw, BarChart3, Star, StarOff } from 'lucide-react';
+import React, { useMemo, useCallback, memo, useRef } from 'react';
+import { TrendingUp, TrendingDown, RefreshCw, BarChart3 } from 'lucide-react';
 import './CryptoGrid.css';
 
 // Memoized crypto card component for better performance
-const CryptoCard = memo(({ crypto, isFavorite, onToggleFavorite }) => {
+const CryptoCard = memo(({ crypto }) => {
   const formatPrice = useCallback((price) => {
     if (!price) return '$0.00';
     if (price < 0.01) {
@@ -35,11 +35,6 @@ const CryptoCard = memo(({ crypto, isFavorite, onToggleFavorite }) => {
     if (value >= 1e3) return `$${(value / 1e3).toFixed(2)}K`;
     return `$${value.toFixed(0)}`;
   }, []);
-
-  const handleFavoriteClick = useCallback((e) => {
-    e.stopPropagation();
-    onToggleFavorite(crypto.id);
-  }, [crypto.id, onToggleFavorite]);
 
   // Memoize calculated values to prevent recalculation on every render
   const { priceChange24h, priceChange7d, isPositive24h, isPositive7d } = useMemo(() => {
@@ -99,27 +94,8 @@ const CryptoCard = memo(({ crypto, isFavorite, onToggleFavorite }) => {
           </div>
         </div>
         <div className="crypto-actions">
-          <div 
-            className={`favorite-toggle ${isFavorite ? 'favorited' : ''}`}
-            onClick={handleFavoriteClick}
-            role="button"
-            tabIndex={0}
-            aria-label={`${isFavorite ? 'Remove from' : 'Add to'} favorites`}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                handleFavoriteClick(e);
-              }
-            }}
-          >
-            <div className="favorite-icon">
-              {isFavorite ? <Star size={14} fill="currentColor" /> : <StarOff size={14} />}
-            </div>
-            <span className="favorite-text">{isFavorite ? 'Saved' : 'Save'}</span>
-          </div>
-          <div className="crypto-rank-badge">
-            <span className="rank-label">Rank</span>
-            <span className="rank-value">#{crypto.cmc_rank || 'N/A'}</span>
+          <div className="crypto-rank-modern">
+            <span className="rank-number">#{crypto.cmc_rank || 'N/A'}</span>
           </div>
         </div>
       </div>
@@ -237,31 +213,12 @@ const CryptoCard = memo(({ crypto, isFavorite, onToggleFavorite }) => {
 CryptoCard.displayName = 'CryptoCard';
 
 const CryptoGrid = ({ cryptoData, loading, loadingMore, error, hasMoreData, onRefresh, onLoadMore }) => {
-  const [favorites, setFavorites] = useState(new Set());
-  const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
   const sectionRef = useRef(null);
-
-  const toggleFavorite = useCallback((cryptoId) => {
-    setFavorites(prev => {
-      const newFavorites = new Set(prev);
-      if (newFavorites.has(cryptoId)) {
-        newFavorites.delete(cryptoId);
-      } else {
-        newFavorites.add(cryptoId);
-      }
-      return newFavorites;
-    });
-  }, []);
 
   const filteredAndSortedData = useMemo(() => {
     if (!cryptoData || cryptoData.length === 0) return [];
-    
-    if (showOnlyFavorites) {
-      return cryptoData.filter(crypto => favorites.has(crypto.id));
-    }
-    
     return cryptoData;
-  }, [cryptoData, showOnlyFavorites, favorites]);
+  }, [cryptoData]);
 
   const handleRefresh = useCallback(() => {
     onRefresh();
@@ -325,23 +282,11 @@ const CryptoGrid = ({ cryptoData, loading, loadingMore, error, hasMoreData, onRe
             <CryptoCard
               key={crypto.id}
               crypto={crypto}
-              isFavorite={favorites.has(crypto.id)}
-              onToggleFavorite={toggleFavorite}
             />
           ))}
         </div>
         
-        {filteredAndSortedData.length === 0 && showOnlyFavorites && favorites.size === 0 && (
-          <div className="no-results">
-            <h3>No favorites yet</h3>
-            <p>Add cryptocurrencies to your favorites by clicking the star icon</p>
-            <button onClick={() => setShowOnlyFavorites(false)} className="action-button show-all">
-              <span>Show All Cryptocurrencies</span>
-            </button>
-          </div>
-        )}
-        
-        {hasMoreData && !showOnlyFavorites && (
+        {hasMoreData && (
           <div className="load-more-container">
             <div 
               className={`load-more-control ${loadingMore ? 'loading' : ''}`}

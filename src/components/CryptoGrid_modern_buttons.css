@@ -47,11 +47,6 @@
   transition: all 0.3s ease;
 }
 
-.favorite-text {
-  font-weight: 600;
-  letter-spacing: 0.3px;
-}
-
 /* Enhanced Rank Badge */
 .crypto-rank-badge {
   display: flex;
