@@ -1,6 +1,5 @@
 import React from 'react';
 import { Shield, TrendingUp, Users, Award, BarChart3, Globe } from 'lucide-react';
-import GridMotion from './GridMotion';
 import './About.css';
 
 const About = ({ cryptoData = [] }) => {
@@ -44,45 +43,16 @@ const About = ({ cryptoData = [] }) => {
     { number: "24/7", label: "Support" }
   ];
 
-  // Create dynamic crypto items from real API data
-  const createCryptoItems = () => {
-    if (cryptoData && cryptoData.length > 0) {
-      return cryptoData.slice(0, 28).map((crypto, index) => ({
-        type: 'crypto',
-        symbol: crypto.symbol,
-        name: crypto.name,
-        price: crypto.quote?.USD?.price || 0,
-        change: crypto.quote?.USD?.percent_change_24h || 0,
-        image: crypto.image,
-        rank: crypto.cmc_rank,
-        current_price: crypto.quote?.USD?.price || 0,
-        price_change_percentage_24h: crypto.quote?.USD?.percent_change_24h || 0
-      }));
-    }
-    
-    // Fallback crypto items if no data
-    return [
-      "₿", "Ξ", "₳", "⚡", "🌕", "📈", "💎", 
-      "BTC", "ETH", "ADA", "SOL", "DOGE", "DOT", "LINK",
-      "🚀", "💰", "📊", "⭐", "🔥", "💸", "🎯",
-      "XRP", "LTC", "BCH", "UNI", "MATIC", "AVAX", "ATOM"
-    ];
-  };
-
-  const cryptoItems = createCryptoItems();
-
   return (
     <section className="about-section" id="about">
-      {/* GridMotion Background */}
-      <div className="about-grid-motion">
-        <GridMotion 
-          items={cryptoItems} 
-          gradientColor="rgba(0, 212, 255, 0.1)" 
-        />
-      </div>
-      
       <div className="about-container">
         <div className="about-header">
+          <div className="about-badge">
+            <div className="about-icon-small">
+              <Shield size={16} />
+            </div>
+            <span>About</span>
+          </div>
           <h2>About CryptoTracker</h2>
           <p>Your trusted partner in cryptocurrency tracking and portfolio management</p>
         </div>
