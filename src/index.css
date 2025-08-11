@@ -17,6 +17,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   scroll-behavior: smooth;
+  background: linear-gradient(
+    to bottom,
+    #000000 0%,
+    #0a0f2c 40%,
+    #2b375e 60%,
+    #8a2f4e 80%,
+    #ff4d5a 100%
+  );
+  min-height: 100vh;
+  background-attachment: fixed;
 }
 
 /* Performance optimizations for smooth animations */

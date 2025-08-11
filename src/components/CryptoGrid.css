@@ -3,7 +3,7 @@
 /* Main crypto section improvements */
 .crypto-section {
   padding: 8rem 0;
-  background: var(--primary-bg);
+  background: transparent;
   position: relative;
   overflow: hidden;
   min-height: 100vh;

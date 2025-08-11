@@ -6,7 +6,7 @@
   align-items: center;
   position: relative;
   overflow: hidden;
-  background: var(--primary-bg);
+  background: transparent;
   padding: 6rem 1rem 4rem;
 }
 
