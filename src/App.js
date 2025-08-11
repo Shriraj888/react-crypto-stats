@@ -1,11 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, lazy, Suspense } from 'react';
 import './App.css';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import CryptoGrid from './components/CryptoGrid';
-import About from './components/About';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
+
+// Lazy load components that are below the fold
+const CryptoGrid = lazy(() => import('./components/CryptoGrid'));
+const About = lazy(() => import('./components/About'));
+const Contact = lazy(() => import('./components/Contact'));
+const Footer = lazy(() => import('./components/Footer'));
+
+// Loading component for lazy-loaded components
+const ComponentLoader = () => (
+  <div style={{ 
+    display: 'flex', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    minHeight: '200px',
+    color: '#ffffff'
+  }}>
+    Loading...
+  </div>
+);
 
 function App() {
   const [cryptoData, setCryptoData] = useState([]);
@@ -15,14 +30,8 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMoreData, setHasMoreData] = useState(true);
 
-  // Using CoinGecko API as alternative to avoid CORS issues
-  // Your CoinMarketCap API key: 026530c3-17e3-4183-a336-14429a7b3bd6 (saved for future backend integration)
-
-  useEffect(() => {
-    fetchCryptoData();
-  }, []);
-
-  const fetchCryptoData = async (page = 1, isLoadMore = false) => {
+  // Optimized fetch function with useCallback
+  const fetchCryptoData = useCallback(async (page = 1, isLoadMore = false) => {
     try {
       if (!isLoadMore) {
         setLoading(true);
@@ -30,8 +39,8 @@ function App() {
         setLoadingMore(true);
       }
       
-      // Using CoinGecko API which includes image URLs and doesn't require API key
-      const COINGECKO_URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=${page}&sparkline=false&price_change_percentage=24h,7d`;
+      // Using CoinGecko API with reduced data for better performance
+      const COINGECKO_URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=${page}&sparkline=false&price_change_percentage=24h`;
       
       const response = await fetch(COINGECKO_URL);
       
@@ -41,19 +50,17 @@ function App() {
       
       const data = await response.json();
       
-      // Transform CoinGecko data to match our component format, including images
+      // Optimized data transformation
       const transformedData = data.map((coin, index) => ({
         id: coin.id,
         name: coin.name,
         symbol: coin.symbol.toUpperCase(),
         cmc_rank: coin.market_cap_rank || ((page - 1) * 20 + index + 1),
-        image: coin.image, // Add image URL from CoinGecko
-        circulating_supply: coin.circulating_supply,
+        image: coin.image,
         quote: {
           USD: {
             price: coin.current_price,
             percent_change_24h: coin.price_change_percentage_24h || 0,
-            percent_change_7d: coin.price_change_percentage_7d_in_currency || 0,
             market_cap: coin.market_cap,
             volume_24h: coin.total_volume
           }
@@ -66,7 +73,6 @@ function App() {
         setCryptoData(transformedData);
       }
       
-      // Check if we have more data (CoinGecko has thousands of coins)
       setHasMoreData(data.length === 20);
       setError(null);
     } catch (err) {
@@ -76,33 +82,56 @@ function App() {
       setLoading(false);
       setLoadingMore(false);
     }
-  };
+  }, []);
 
-  const loadMoreCryptos = () => {
+  // Optimized load more function
+  const loadMoreCryptos = useCallback(() => {
     const nextPage = currentPage + 1;
     setCurrentPage(nextPage);
     fetchCryptoData(nextPage, true);
-  };
+  }, [currentPage, fetchCryptoData]);
+
+  // Optimized refresh function
+  const handleRefresh = useCallback(() => {
+    setCurrentPage(1);
+    fetchCryptoData(1, false);
+  }, [fetchCryptoData]);
+
+  // Memoized data to prevent unnecessary re-renders
+  const memoizedCryptoData = useMemo(() => cryptoData, [cryptoData]);
+
+  useEffect(() => {
+    fetchCryptoData();
+  }, [fetchCryptoData]);
 
   return (
     <div className="App">
       <Header />
-      <Hero cryptoData={cryptoData} />
-      <CryptoGrid 
-        cryptoData={cryptoData} 
-        loading={loading} 
-        loadingMore={loadingMore}
-        error={error} 
-        hasMoreData={hasMoreData}
-        onRefresh={() => {
-          setCurrentPage(1);
-          fetchCryptoData(1, false);
-        }}
-        onLoadMore={loadMoreCryptos}
-      />
-      <About cryptoData={cryptoData} />
-      <Contact />
-      <Footer />
+      <Hero cryptoData={memoizedCryptoData} />
+      
+      <Suspense fallback={<ComponentLoader />}>
+        <CryptoGrid 
+          cryptoData={memoizedCryptoData} 
+          loading={loading} 
+          loadingMore={loadingMore}
+          error={error} 
+          hasMoreData={hasMoreData}
+          onRefresh={handleRefresh}
+          onLoadMore={loadMoreCryptos}
+        />
+      </Suspense>
+      
+      <Suspense fallback={<ComponentLoader />}>
+        <About cryptoData={memoizedCryptoData} />
+      </Suspense>
+      
+      <Suspense fallback={<ComponentLoader />}>
+        <Contact />
+      </Suspense>
+      
+      <Suspense fallback={<ComponentLoader />}>
+        <Footer />
+      </Suspense>
     </div>
   );
 }
