@@ -8,18 +8,18 @@
   min-height: 80vh;
 }
 
-/* Enhanced Static Background Text at Center Top - Responsive & Zoom Compatible */
+/* Enhanced Static Background Text at Center Top - Optimized for ABOUT word length */
 .about-section::before {
   content: 'ABOUT';
   position: absolute;
-  top: 5%;
+  top: 8%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: clamp(6rem, 20vw, 28rem);
+  font-size: clamp(5rem, 18vw, 24rem);
   font-weight: 900;
   color: rgba(255, 255, 255, 0.4);
   font-family: 'Space Grotesk', sans-serif;
-  letter-spacing: clamp(0.08em, 0.4vw, 0.18em);
+  letter-spacing: clamp(0.06em, 0.35vw, 0.15em);
   text-transform: uppercase;
   z-index: 1;
   pointer-events: none;
@@ -32,6 +32,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Enhanced for better zoom compatibility at 100% zoom */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .about-container {
@@ -305,12 +309,12 @@
   }
 }
 
-/* Enhanced ABOUT text for mobile */
+/* Enhanced ABOUT text for mobile - Optimized for ABOUT word length */
 @media (max-width: 768px) {
   .about-section::before {
-    font-size: clamp(4rem, 15vw, 18rem);
-    top: 4%;
-    letter-spacing: clamp(0.04em, 0.3vw, 0.12em);
+    font-size: clamp(3.5rem, 14vw, 16rem);
+    top: 6%;
+    letter-spacing: clamp(0.03em, 0.28vw, 0.10em);
   }
   
   .about-container {
@@ -333,9 +337,9 @@
 
 @media (max-width: 640px) {
   .about-section::before {
-    font-size: clamp(3rem, 12vw, 14rem);
-    top: 3%;
-    letter-spacing: clamp(0.03em, 0.25vw, 0.1em);
+    font-size: clamp(2.5rem, 10vw, 12rem);
+    top: 7%;
+    letter-spacing: clamp(0.02em, 0.25vw, 0.08em);
   }
   
   .about-container {
@@ -354,6 +358,19 @@
   .story-stats {
     grid-template-columns: 1fr;
     gap: 1rem;
+  }
+}
+
+/* Enhanced ABOUT text for very small screens */
+@media (max-width: 480px) {
+  .about-section::before {
+    font-size: clamp(2rem, 8vw, 10rem);
+    top: 8%;
+    letter-spacing: clamp(0.01em, 0.2vw, 0.06em);
+  }
+  
+  .about-container {
+    padding-top: 2.5rem;
   }
 }
 
