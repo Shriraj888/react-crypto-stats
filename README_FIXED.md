@@ -14,14 +14,13 @@
 
 ## ⚠️ Current Status: Demo Mode
 
-This application is currently have **simulated cryptocurrency data** for demonstration purposes.
-
+This application is currently running with **simulated cryptocurrency data** for demonstration purposes.
 
 ## 🚨 Important Notice About Live Demo
 
-**This GitHub repository does NOT include real API integration.** However, a live demo link that  has real-time cryptocurrency data, that means:
+**This GitHub repository does NOT include real API integration.** However, if you find a live demo link elsewhere that shows real-time cryptocurrency data, that means:
 
-- The live demo is hosted separately with its own API keys , it is loading the real time data
+- The live demo is hosted separately with its own API keys
 - The demo site has integrated real cryptocurrency APIs (CoinMarketCap, CoinGecko, etc.)
 - **THIS repository contains only demo/simulated data**
 
@@ -30,7 +29,7 @@ This application is currently have **simulated cryptocurrency data** for demonst
 2. Follow the [API Integration Guide](./API_INTEGRATION.md) in this repository
 3. Replace the demo data service with actual API calls using your API key
 
-**No API keys are included in this repository for security reasons. Replace with your API**
+**No API keys are included in this repository for security reasons.**
 
 ## ⚡ Key Features
 

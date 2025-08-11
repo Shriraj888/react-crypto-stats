@@ -6,31 +6,31 @@ const About = () => {
   const features = [
     {
       icon: <TrendingUp size={28} />,
-      title: "Real-Time Data",
-      description: "Live cryptocurrency prices updated every second."
+      title: "Demo Data Simulation",
+      description: "Experience realistic cryptocurrency price movements and market trends."
     },
     {
       icon: <Shield size={28} />,
-      title: "Secure Platform",
-      description: "Bank-level security with encrypted connections."
+      title: "Secure Demo Environment",
+      description: "Safe exploration of crypto analytics without real financial data."
     },
     {
       icon: <BarChart3 size={28} />,
-      title: "Advanced Analytics",
-      description: "Comprehensive market analysis and charts."
+      title: "Advanced Analytics Preview",
+      description: "Explore comprehensive market analysis tools and interactive charts."
     },
     {
       icon: <Globe size={28} />,
-      title: "Global Coverage",
-      description: "Track cryptocurrencies from worldwide exchanges."
+      title: "Global Market Simulation",
+      description: "Experience tracking cryptocurrencies from worldwide exchanges."
     }
   ];
 
   const stats = [
-    { number: "10K+", label: "Users" },
-    { number: "500+", label: "Cryptos" },
-    { number: "99.9%", label: "Uptime" },
-    { number: "24/7", label: "Support" }
+    { number: "50K+", label: "Demo Users" },
+    { number: "20+", label: "Demo Cryptos" },
+    { number: "100%", label: "Demo Uptime" },
+    { number: "24/7", label: "Demo Access" }
   ];
 
   return (
@@ -41,8 +41,8 @@ const About = () => {
             <Shield size={16} />
             <span>About</span>
           </div>
-          <h2>Professional Crypto Tracking</h2>
-          <p>Your trusted platform for cryptocurrency market insights</p>
+          <h2>Crypto Analytics Demo Platform</h2>
+          <p>Experience professional cryptocurrency market insights with simulated data</p>
         </div>
 
         <div className="about-content">

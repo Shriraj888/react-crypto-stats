@@ -2,6 +2,14 @@ import React, { useState, useCallback, useEffect, memo } from 'react';
 import { Menu, X } from 'lucide-react';
 import './Header.css';
 
+// ========================================
+// 🔑 HEADER COMPONENT
+// ========================================
+// This component works with both demo and real data.
+// No changes needed for API integration.
+// The navigation and UI elements are data-agnostic.
+// ========================================
+
 const Header = memo(() => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);

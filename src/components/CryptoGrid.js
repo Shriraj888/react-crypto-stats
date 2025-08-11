@@ -2,6 +2,23 @@ import React, { useMemo, useCallback, memo, useRef } from 'react';
 import { TrendingUp, TrendingDown, RefreshCw, BarChart3 } from 'lucide-react';
 import './CryptoGrid.css';
 
+// ========================================
+// 🔑 CRYPTO GRID COMPONENT
+// ========================================
+// This component displays cryptocurrency data in a grid format.
+// Currently using demo data - to integrate with real APIs:
+// 1. Ensure your API data matches the expected structure:
+//    - crypto.id, crypto.name, crypto.symbol
+//    - crypto.image (logo URL)
+//    - crypto.quote.USD.price
+//    - crypto.quote.USD.percent_change_24h
+//    - crypto.quote.USD.market_cap
+//    - crypto.quote.USD.volume_24h
+//    - crypto.cmc_rank
+// 2. Update the parent component's data fetching logic
+// 3. No changes needed in this component for real data
+// ========================================
+
 // Memoized crypto card component for better performance
 const CryptoCard = memo(({ crypto }) => {
   const formatPrice = useCallback((price) => {

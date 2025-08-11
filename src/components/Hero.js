@@ -2,6 +2,17 @@ import React, { useState, useEffect, useRef, memo, useMemo, useCallback } from '
 import { TrendingUp, BarChart3, Shield, Play, Star, Rocket, CheckCircle, Users, Clock } from 'lucide-react';
 import './Hero.css';
 
+// ========================================
+// 🔑 HERO COMPONENT
+// ========================================
+// This component displays market overview and hero section.
+// Currently using demo data - to integrate with real APIs:
+// 1. The cryptoData prop will automatically work with real data
+// 2. Ensure your API provides market_cap values for calculation
+// 3. Consider adding real market stats from global endpoints
+// 4. Update text content to reflect real vs demo status
+// ========================================
+
 const Hero = memo(({ cryptoData = [] }) => {
   const [animatedStats, setAnimatedStats] = useState({
     totalValue: 0,
@@ -140,7 +151,7 @@ const Hero = memo(({ cryptoData = [] }) => {
         <div className="hero-content">
           <div className="hero-badge animate-slide-in">
             <Star size={16} />
-            <span>Professional Crypto Analytics</span>
+            <span>Demo Crypto Analytics Platform</span>
           </div>
           
           <h1 className="hero-title animate-fade-in-up">
@@ -148,7 +159,7 @@ const Hero = memo(({ cryptoData = [] }) => {
           </h1>
           
           <p className="hero-subtitle animate-fade-in-up">
-            Access real-time market data, advanced analytics, and institutional-grade insights for 10,000+ cryptocurrencies.
+            Explore our comprehensive crypto analytics platform with live demo data. Experience real-time market insights, advanced charting, and institutional-grade tools.
           </p>
 
           <div className="hero-stats-grid animate-fade-in-up">

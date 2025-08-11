@@ -3,6 +3,20 @@ import './App.css';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import perfMonitor from './utils/performance';
+import demoDataService from './services/demoDataService';
+
+// ========================================
+// 🔑 API CONFIGURATION INSTRUCTIONS
+// ========================================
+// To use real-time cryptocurrency data instead of demo data:
+// 1. Replace 'demoDataService' with actual API calls
+// 2. Get API keys from:
+//    - CoinMarketCap: https://coinmarketcap.com/api/
+//    - CoinGecko: https://www.coingecko.com/en/api
+//    - Binance: https://binance-docs.github.io/apidocs/
+// 3. Add your API key in the fetchCryptoData function below
+// 4. Update API endpoints and headers accordingly
+// ========================================
 
 // Lazy load components that are below the fold
 const CryptoGrid = lazy(() => import('./components/CryptoGrid'));
@@ -31,9 +45,10 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMoreData, setHasMoreData] = useState(true);
 
-  // Optimized fetch function with performance tracking
+  // Demo fetch function using demo data service
+  // 🔑 TO USE REAL API: Replace this entire function with actual API calls
   const fetchCryptoData = useCallback(async (page = 1, isLoadMore = false) => {
-    return await perfMonitor.measureApiCall('coingecko_markets', async () => {
+    return await perfMonitor.measureApiCall('demo_markets', async () => {
       try {
         if (!isLoadMore) {
           setLoading(true);
@@ -41,45 +56,36 @@ function App() {
           setLoadingMore(true);
         }
         
-        // Using CoinGecko API with reduced data for better performance
-        const COINGECKO_URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=${page}&sparkline=false&price_change_percentage=24h`;
+        // 🔑 DEMO DATA SERVICE - Replace with real API
+        // Example for CoinMarketCap:
+        // const API_KEY = 'YOUR_CMC_API_KEY_HERE';
+        // const response = await fetch(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=${(page-1)*20+1}&limit=20`, {
+        //   headers: {
+        //     'X-CMC_PRO_API_KEY': API_KEY,
+        //     'Accept': 'application/json'
+        //   }
+        // });
+        // const result = await response.json();
+        // const data = result.data;
         
-        const response = await fetch(COINGECKO_URL);
+        // Example for CoinGecko Pro:
+        // const API_KEY = 'YOUR_COINGECKO_API_KEY_HERE';
+        // const response = await fetch(`https://pro-api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=${page}&x_cg_pro_api_key=${API_KEY}`);
+        // const data = await response.json();
         
-        if (!response.ok) {
-          throw new Error('Failed to fetch crypto data');
-        }
-        
-        const data = await response.json();
-        
-        // Optimized data transformation
-        const transformedData = data.map((coin, index) => ({
-          id: coin.id,
-          name: coin.name,
-          symbol: coin.symbol.toUpperCase(),
-          cmc_rank: coin.market_cap_rank || ((page - 1) * 20 + index + 1),
-          image: coin.image,
-          quote: {
-            USD: {
-              price: coin.current_price,
-              percent_change_24h: coin.price_change_percentage_24h || 0,
-              market_cap: coin.market_cap,
-              volume_24h: coin.total_volume
-            }
-          }
-        }));
+        const response = await demoDataService.getLiveData(page);
         
         if (isLoadMore) {
-          setCryptoData(prevData => [...prevData, ...transformedData]);
+          setCryptoData(prevData => [...prevData, ...response.data]);
         } else {
-          setCryptoData(transformedData);
+          setCryptoData(response.data);
         }
         
-        setHasMoreData(data.length === 20);
+        setHasMoreData(response.hasMore);
         setError(null);
       } catch (err) {
-        setError(err.message);
-        console.error('Error fetching crypto data:', err);
+        setError('Demo data loading failed');
+        console.error('Error loading demo data:', err);
         throw err;
       } finally {
         setLoading(false);
@@ -117,6 +123,14 @@ function App() {
 
   return (
     <div className="App">
+      {/* Demo Banner */}
+      <div className="demo-banner">
+        <div className="demo-banner-content">
+          <span className="demo-badge">DEMO MODE</span>
+          <span className="demo-text">This application is running with simulated cryptocurrency data for demonstration purposes.</span>
+        </div>
+      </div>
+      
       <Header />
       <Hero cryptoData={memoizedCryptoData} />
       
