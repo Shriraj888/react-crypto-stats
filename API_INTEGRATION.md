@@ -7,7 +7,7 @@ This React application displays cryptocurrency market data in a modern, responsi
 ### Quick Start - Switch to Real Data
 
 To integrate with real cryptocurrency APIs, follow these steps:
- 
+  
 ### 1. Choose Your API Provider
 
 **Popular Options:**
