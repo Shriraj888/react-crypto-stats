@@ -5,7 +5,7 @@ import Hero from './components/Hero';
 import perfMonitor from './utils/performance';
 import demoDataService from './services/demoDataService';
 
-//  ========================================
+//   ========================================
 // 🔑 API CONFIGURATION INSTRUCTIONS
 // ========================================
 // To use real-time cryptocurrency data instead of demo data:
