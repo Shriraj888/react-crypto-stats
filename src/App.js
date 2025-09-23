@@ -7,7 +7,7 @@ import demoDataService from './services/demoDataService';
   
 //   ========================================
 // 🔑 API CONFIGURATION INSTRUCTIONS
-// ========================================
+//   ========================================
 // To use real-time cryptocurrency data instead of demo data:
 // 1. Replace 'demoDataService' with actual API calls
 // 2. Get API keys from:
