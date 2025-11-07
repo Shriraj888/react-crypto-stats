@@ -3,7 +3,7 @@ import './App.css';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import perfMonitor from './utils/performance';
-import demoDataService from './services/demoDataService';
+import demoDataService from './services/demoDataService'; 
   
 //   ========================================
 // 🔑 API CONFIGURATION INSTRUCTIONS
