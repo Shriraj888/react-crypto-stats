@@ -21,7 +21,7 @@ import demoDataService from './services/demoDataService';
 // Lazy load components that are below the fold
 const CryptoGrid = lazy(() => import('./components/CryptoGrid'));
 const About = lazy(() => import('./components/About'));
-const Contact = lazy(() => import('./components/Contact'));
+const Contact = lazy(() => import('./components/Contact')); 
 const Footer = lazy(() => import('./components/Footer'));
 
 // Loading component for lazy-loaded components
