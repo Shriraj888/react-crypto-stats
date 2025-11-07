@@ -10,7 +10,7 @@ import demoDataService from './services/demoDataService';
 //   ========================================
 // To use real-time cryptocurrency data instead of demo data:
 // 1. Replace 'demoDataService' with actual API calls
-// 2. Get API keys from:
+// 2. Get API keys from: 
 //    - CoinMarketCap: https://coinmarketcap.com/api/
 //    - CoinGecko: https://www.coingecko.com/en/api
 //    - Binance: https://binance-docs.github.io/apidocs/
